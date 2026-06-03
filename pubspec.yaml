@@ -1,0 +1,86 @@
+name: digthetrick_ai_thin_slice
+description: "DigTheTrick AI — Live Listen / Chat / Resume Q&A / Solve."
+publish_to: "none"
+version: 0.2.0
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # HTTP client. We use the streamed-response API for SSE.
+  http: ^1.2.2
+
+  # Renders assistant markdown (headings, lists, bold, etc.).
+  flutter_markdown: ^0.7.4
+
+  # Syntax-highlighted code blocks inside markdown.
+  flutter_highlight: ^0.7.0
+
+  # Resume upload: cross-platform file picker. `withData: true` ensures
+  # bytes are populated on every platform (web, mobile, desktop).
+  file_picker: ^8.1.4
+
+  # Native OS file drag-and-drop onto the chat (Claude-style). Provides the
+  # DropTarget widget + XFile drops on Windows/macOS/Linux.
+  desktop_drop: ^0.5.0
+  cross_file: ^0.3.4+2
+
+  # State management. ChangeNotifier + Provider keeps the app's wiring
+  # explicit without the ceremony of Riverpod/Bloc.
+  provider: ^6.1.2
+
+  # Live Listen: WebSocket transport for audio + answer streaming.
+  web_socket_channel: ^3.0.1
+
+  # Live Listen (mic): cross-platform mic capture into raw PCM. Used for
+  # streaming int16 frames to the backend over the WebSocket.
+  # v6 ships a record_linux that matches the current record_platform_interface
+  # API (v5 still pulls record_linux 0.7.2 which fails to compile against it).
+  record: ^6.0.0
+
+  # Image picker (fallback for Solve on mobile / web). On Windows we
+  # capture silently via FFI (see lib/services/silent_capture.dart) so
+  # we don't depend on `screen_capturer` any more — that plugin invokes
+  # SnippingTool.exe on Windows, which is visible to anyone watching.
+  image_picker: ^1.1.2
+
+  # Silent screen capture on Windows: BitBlt against the desktop DC via
+  # the win32 FFI bindings, then PNG-encode in Dart.
+  win32: ^5.5.4
+  ffi: ^2.1.3
+  image: ^4.5.2
+
+  # Light persistence for theme/last resume id between runs.
+  shared_preferences: ^2.3.3
+
+  # Solve screen: minimize the app before screenshotting so the LeetCode/
+  # editor window underneath is what gets captured (not our own UI).
+  window_manager: ^0.4.2
+
+  # Open external URLs (e.g. mermaid.live editor link from the Mermaid
+  # renderer block). Optional — when the platform doesn't allow opens,
+  # the widget falls back to copying the URL.
+  url_launcher: ^6.3.0
+
+  # CodeIn workspace path manipulation (project root, relative path
+  # safety checks). Pure-Dart, no platform code.
+  path: ^1.9.0
+
+  # CodeIn embeds the DigTheTrick IDE (VS Code / code-server) in a webview.
+  # flutter_inappwebview renders the locally-served editor inside the app.
+  flutter_inappwebview: ^6.1.5
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    # Bundled mermaid.js so diagrams render fully offline (no CDN). Injected
+    # into the diagram webview by lib/widgets/mermaid_renderer.dart.
+    - assets/mermaid/mermaid.min.js

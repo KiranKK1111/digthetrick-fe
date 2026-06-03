@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/digthetrick_ai_thin_slice.iml" filepath="$PROJECT_DIR$/digthetrick_ai_thin_slice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/digthetrick_ai_thin_slice_android.iml" filepath="$PROJECT_DIR$/android/digthetrick_ai_thin_slice_android.iml" />
+    </modules>
+  </component>
+</project>
